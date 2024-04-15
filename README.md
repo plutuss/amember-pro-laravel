@@ -83,3 +83,21 @@ class AMemberController extends Controller
 }
 
 ```
+
+### Parameters
+
+You can pass additional parameters to control output: [Docs](https://docs.amember.com/REST/#fetching-list-of-users-via-web-api)
+
+| Method    | Description                                                                                                    | 
+ |-----------|----------------------------------------------------------------------------------------------------------------| 
+| format()  | Either: json (default), xml or serialize                                                                       | 
+| count()   | Number of records per page (default: 20, max: 1000)                                                            |  
+| page()    | Page of output (default: 0 - the first page)                                                                   |
+| sort()    | Sort records based on a specified field                                                                        |
+| order()   | Sort direction. Either asc (default) or desc                                                                   |
+| filter()  | Adds a WHERE condition for FIELDNAME.                                                                          
+|           | If search value contains % - it is considered as pattern for SQL LIKE expression, else SQL scondition is used. 
+|           | If multiple filters are provided, it will be concatenated into an SQL AND expression.                          |
+| nested()  |Requests to include nested records into dataset.  nested[]=invoices&nested[]=access
+| | It will add user's invoices and access records into output. List of available nested tables is unique to each record type.| 
+ 
