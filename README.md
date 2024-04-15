@@ -3,6 +3,7 @@
 Laravel:
 
 - [GitHub](https://github.com/plutuss/amember-api-laravel).
+- [AMember Pro Web API](https://docs.amember.com/REST/).
 
 ```shell
  composer require plutuss/amember-api-laravel
@@ -41,6 +42,24 @@ class AMemberController extends Controller
     public function index()
     {
       \Plutuss\AMember\Facades\AMember::users()->getUsers();
+    }
+    
+      public function invoice_all()
+     {
+       \Plutuss\AMember\Facades\AMember::invoice()->getInvoice();
+     }
+     
+        public function invoice_by_id()
+     {
+       \Plutuss\AMember\Facades\AMember::invoice()->getInvoice(8);
+     }
+    
+     public function auth()
+    {
+          \Plutuss\AMember\Facades\AMember::auth()->byLoginPass(     
+            login: 'admin',
+            pass: '12341234'
+        );
     }
     
       public function store()
