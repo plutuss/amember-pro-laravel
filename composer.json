@@ -1,6 +1,6 @@
 {
     "name": "plutuss/amember-api-laravel",
-    "description": "aMember Pro provides web api based on REST principles. It allows to fetch and submit information about users, products and payments",
+    "description": "aMember allows you to receive and send information about users, products and payments",
     "keywords": [
         "laravel",
         "aMember",
