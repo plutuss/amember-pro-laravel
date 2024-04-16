@@ -6,7 +6,7 @@ Laravel:
 - [AMember Pro Web API](https://docs.amember.com/REST/).
 
 ```shell
- composer require plutuss/amember-api-laravel
+ composer require plutuss/amember-pro-laravel
 ```
 
 ```shell
