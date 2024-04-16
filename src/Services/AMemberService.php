@@ -2,7 +2,6 @@
 
 namespace Plutuss\AMember\Services;
 
-use Plutuss\AMember\Contracts\AMemberInterface;
 use Plutuss\AMember\Contracts\AMemberParametersApiInterface;
 use Plutuss\AMember\Services\Access\AMemberAccessInterface;
 use Plutuss\AMember\Services\Access\AMemberAccessService;

@@ -3,7 +3,7 @@
 namespace Plutuss\AMember\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Plutuss\AMember\Contracts\AMemberInterface;
+use Plutuss\AMember\Services\AMemberInterface;
 use Plutuss\AMember\Services\AMemberService;
 
 class AMemberServiceProvider extends ServiceProvider
