@@ -2,6 +2,7 @@
 
 namespace Plutuss\AMember\Services\Auth;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 
 interface AMemberCheckAccessInterface
@@ -10,32 +11,32 @@ interface AMemberCheckAccessInterface
      * @param string $login
      * @param string $pass
      * @param string $ip
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function byLoginPassIp(string $login, string $pass, string $ip): Collection;
+    public function byLoginPassIp(string $login, string $pass, string $ip): JsonResponse|array|Collection;
 
     /**
      * @param string $login
      * @param string $pass
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function byLoginPass(string $login, string $pass): Collection;
+    public function byLoginPass(string $login, string $pass): JsonResponse|array|Collection;
 
     /**
      * @param string $login
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function byUsername(string $login): Collection;
+    public function byUsername(string $login): JsonResponse|array|Collection;
 
     /**
      * @param string $email
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function byEmailAddress(string $email): Collection;
+    public function byEmailAddress(string $email): JsonResponse|array|Collection;
 
     /**
      * @param string $login
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function restorePassword(string $login): Collection;
+    public function restorePassword(string $login): JsonResponse|array|Collection;
 }

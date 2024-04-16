@@ -2,6 +2,7 @@
 
 namespace Plutuss\AMember\Services\Refund;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 
 interface AMemberRefundInterface
@@ -9,7 +10,7 @@ interface AMemberRefundInterface
 
     /**
      * @param int|null $id
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function invoiceRefunds(?int $id = null): Collection;
+    public function invoiceRefunds(?int $id = null): JsonResponse|array|Collection;
 }

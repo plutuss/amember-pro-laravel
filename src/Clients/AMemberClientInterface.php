@@ -2,7 +2,9 @@
 
 namespace Plutuss\AMember\Clients;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
+
 
 interface AMemberClientInterface
 {
@@ -15,23 +17,23 @@ interface AMemberClientInterface
     public function setOption(string $url, array $params = []): static;
 
     /**
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function sendGet(): Collection;
+    public function sendGet(): JsonResponse|array|Collection;
 
     /**
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function sendPost(): Collection;
+    public function sendPost(): JsonResponse|array|Collection;
 
     /**
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function sendPut(): Collection;
+    public function sendPut(): JsonResponse|array|Collection;
 
     /**
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function sendDelete(): Collection;
+    public function sendDelete(): JsonResponse|array|Collection;
 
 }

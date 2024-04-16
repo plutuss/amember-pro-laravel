@@ -2,6 +2,7 @@
 
 namespace Plutuss\AMember\Services\Users;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 use Plutuss\AMember\Clients\AMemberClient;
 use Plutuss\AMember\Contracts\AMemberParametersApiInterface;
@@ -14,14 +15,14 @@ class AMemberUserService extends AMemberClient implements AMemberUserInterface, 
      * @param string $pass
      * @param string $email
      * @param array $params
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
     public function addUsers(
         string $login,
         string $pass,
         string $email,
         array  $params = []
-    ): Collection
+    ): JsonResponse|array|Collection
     {
         return $this->setOption('/users', [
             'login' => $login,
@@ -34,27 +35,27 @@ class AMemberUserService extends AMemberClient implements AMemberUserInterface, 
     /**
      * @param int $id
      * @param array $fieldsAndValue
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function updateUser(int $id, array $fieldsAndValue): Collection
+    public function updateUser(int $id, array $fieldsAndValue): JsonResponse|array|Collection
     {
         return $this->setOption('/users/' . $id, $fieldsAndValue)->sendPut();
     }
 
     /**
      * @param int $id
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function deletingUser(int $id): Collection
+    public function deletingUser(int $id): JsonResponse|array|Collection
     {
         return $this->setOption('/users/' . $id)->sendDelete();
     }
 
     /**
      * @param int|null $id
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function getUsers(?int $id = null): Collection
+    public function getUsers(?int $id = null): JsonResponse|array|Collection
     {
         return $this->setOption(
             url_join('/users', $id)
@@ -63,9 +64,9 @@ class AMemberUserService extends AMemberClient implements AMemberUserInterface, 
 
     /**
      * @param int|null $id
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function getUserConsent(?int $id = null): Collection
+    public function getUserConsent(?int $id = null): JsonResponse|array|Collection
     {
         return $this->setOption(
             url_join('/user-consent', $id)
@@ -74,9 +75,9 @@ class AMemberUserService extends AMemberClient implements AMemberUserInterface, 
 
     /**
      * @param int|null $id
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function getUserGroups(?int $id = null): Collection
+    public function getUserGroups(?int $id = null): JsonResponse|array|Collection
     {
         return $this->setOption(
             url_join('/user-groups', $id)
@@ -85,9 +86,9 @@ class AMemberUserService extends AMemberClient implements AMemberUserInterface, 
 
     /**
      * @param int|null $id
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function getUserNotes(?int $id = null): Collection
+    public function getUserNotes(?int $id = null): JsonResponse|array|Collection
     {
         return $this->setOption(
             url_join('/user-notes', $id)

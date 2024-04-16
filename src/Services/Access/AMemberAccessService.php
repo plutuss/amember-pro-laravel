@@ -2,6 +2,7 @@
 
 namespace Plutuss\AMember\Services\Access;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 use Plutuss\AMember\Clients\AMemberClient;
 use Plutuss\AMember\Contracts\AMemberParametersApiInterface;
@@ -11,9 +12,9 @@ class AMemberAccessService extends AMemberClient implements AMemberAccessInterfa
 
     /**
      * @param int|null $id
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function getAccess(?int $id = null): Collection
+    public function getAccess(?int $id = null): JsonResponse|array|Collection
     {
         return $this->setOption(
             url_join('/access', $id)
@@ -22,9 +23,9 @@ class AMemberAccessService extends AMemberClient implements AMemberAccessInterfa
 
     /**
      * @param int|null $id
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function getAccessLog(?int $id = null): Collection
+    public function getAccessLog(?int $id = null): JsonResponse|array|Collection
     {
         return $this->setOption(
             url_join('/access-log', $id)

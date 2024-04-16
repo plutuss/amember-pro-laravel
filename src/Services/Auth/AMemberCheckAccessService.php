@@ -2,6 +2,7 @@
 
 namespace Plutuss\AMember\Services\Auth;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 use Plutuss\AMember\Clients\AMemberClient;
 use Plutuss\AMember\Contracts\AMemberParametersApiInterface;
@@ -13,9 +14,9 @@ class AMemberCheckAccessService extends AMemberClient implements AMemberCheckAcc
      * @param string $login
      * @param string $pass
      * @param string $ip
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function byLoginPassIp(string $login, string $pass, string $ip): Collection
+    public function byLoginPassIp(string $login, string $pass, string $ip): JsonResponse|array|Collection
     {
         return $this->setOption('/check-access/by-login-pass-ip', [
             'login' => $login,
@@ -28,9 +29,9 @@ class AMemberCheckAccessService extends AMemberClient implements AMemberCheckAcc
     /**
      * @param string $login
      * @param string $pass
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function byLoginPass(string $login, string $pass): Collection
+    public function byLoginPass(string $login, string $pass): JsonResponse|array|Collection
     {
         return $this->setOption('/check-access/by-login-pass', [
             'login' => $login,
@@ -40,9 +41,9 @@ class AMemberCheckAccessService extends AMemberClient implements AMemberCheckAcc
 
     /**
      * @param string $login
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function byUsername(string $login): Collection
+    public function byUsername(string $login): JsonResponse|array|Collection
     {
         return $this->setOption('/check-access/by-login', [
             'login' => $login,
@@ -51,9 +52,9 @@ class AMemberCheckAccessService extends AMemberClient implements AMemberCheckAcc
 
     /**
      * @param string $email
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function byEmailAddress(string $email): Collection
+    public function byEmailAddress(string $email): JsonResponse|array|Collection
     {
         return $this->setOption('/check-access/by-email', [
             'email' => $email,
@@ -62,9 +63,9 @@ class AMemberCheckAccessService extends AMemberClient implements AMemberCheckAcc
 
     /**
      * @param string $login
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function restorePassword(string $login): Collection
+    public function restorePassword(string $login): JsonResponse|array|Collection
     {
         return $this->setOption('/check-access/send-pass', [
             'login' => $login,

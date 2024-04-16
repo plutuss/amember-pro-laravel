@@ -2,6 +2,8 @@
 
 namespace Plutuss\AMember\Services\Product;
 
+
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 use Plutuss\AMember\Clients\AMemberClient;
 use Plutuss\AMember\Contracts\AMemberParametersApiInterface;
@@ -10,9 +12,9 @@ class AMemberProductService extends AMemberClient implements AMemberProductInter
 {
     /**
      * @param int|null $id
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function products(?int $id = null): Collection
+    public function products(?int $id = null): JsonResponse|array|Collection
     {
         return $this->setOption(
             url_join('/products', $id)
@@ -21,9 +23,9 @@ class AMemberProductService extends AMemberClient implements AMemberProductInter
 
     /**
      * @param int|null $id
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function billingPlans(?int $id = null): Collection
+    public function billingPlans(?int $id = null): JsonResponse|array|Collection
     {
         return $this->setOption(
             url_join('/billing-plans', $id)
@@ -32,9 +34,9 @@ class AMemberProductService extends AMemberClient implements AMemberProductInter
 
     /**
      * @param int|null $id
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function productCategoryRelations(int $id = null): Collection
+    public function productCategoryRelations(int $id = null): JsonResponse|array|Collection
     {
         return $this->setOption(
             url_join('/product-product-category', $id)
@@ -43,9 +45,9 @@ class AMemberProductService extends AMemberClient implements AMemberProductInter
 
     /**
      * @param int|null $id
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function productCategory(int $id = null): Collection
+    public function productCategory(int $id = null): JsonResponse|array|Collection
     {
         return $this->setOption(
             url_join('/product-category', $id)

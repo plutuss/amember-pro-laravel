@@ -2,19 +2,20 @@
 
 namespace Plutuss\AMember\Services\Affiliate;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 
 interface AMemberAffiliateInterface
 {
     /**
      * @param int|null $id
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function affPayouts(?int $id = null): \Illuminate\Support\Collection;
+    public function affPayouts(?int $id = null): JsonResponse|array|Collection;
 
     /**
      * @param int|null $id
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function affPayoutDetails(?int $id = null): Collection;
+    public function affPayoutDetails(?int $id = null): JsonResponse|array|Collection;
 }

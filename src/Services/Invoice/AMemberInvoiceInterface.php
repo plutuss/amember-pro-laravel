@@ -2,31 +2,33 @@
 
 namespace Plutuss\AMember\Services\Invoice;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
+
 
 interface AMemberInvoiceInterface
 {
     /**
      * @param int|null $id
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function getInvoiceItems(?int $id = null): Collection;
+    public function getInvoiceItems(?int $id = null): JsonResponse|array|Collection;
 
     /**
      * @param int|null $id
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function getInvoice(?int $id = null): Collection;
+    public function getInvoice(?int $id = null): JsonResponse|array|Collection;
 
     /**
      * @param int|null $id
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function getInvoicePayments(?int $id = null): Collection;
+    public function getInvoicePayments(?int $id = null): JsonResponse|array|Collection;
 
     /**
      * @param int|null $id
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function getAccess(?int $id = null): Collection;
+    public function getAccess(?int $id = null): JsonResponse|array|Collection;
 }
