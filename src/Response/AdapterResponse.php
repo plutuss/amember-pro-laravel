@@ -24,7 +24,7 @@ class AdapterResponse
             'collection' => (new CollectionReportAdapter)->getData($status, $data),
             'array' => (new ArrayReportAdapter)->getData($status, $data),
             'json' => (new JsonReportAdapter)->getData($status, $data),
-            default => (new CollectionReportAdapter)->getData($status, $data),
+            default => $data,
         };
     }
 }
