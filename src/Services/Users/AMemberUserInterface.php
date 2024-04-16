@@ -2,6 +2,7 @@
 
 namespace Plutuss\AMember\Services\Users;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 
 interface AMemberUserInterface
@@ -11,44 +12,44 @@ interface AMemberUserInterface
      * @param string $pass
      * @param string $email
      * @param array $params
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function addUsers(string $login, string $pass, string $email, array $params = []): Collection;
+    public function addUsers(string $login, string $pass, string $email, array $params = []): JsonResponse|array|Collection;
 
     /**
      * @param int $id
      * @param array $fieldsAndValue
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function updateUser(int $id, array $fieldsAndValue): Collection;
+    public function updateUser(int $id, array $fieldsAndValue): JsonResponse|array|Collection;
 
     /**
      * @param int $id
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function deletingUser(int $id): Collection;
+    public function deletingUser(int $id): JsonResponse|array|Collection;
 
     /**
      * @param int|null $id
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function getUsers(?int $id = null): Collection;
+    public function getUsers(?int $id = null): JsonResponse|array|Collection;
 
     /**
      * @param int|null $id
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function getUserConsent(?int $id = null): Collection;
+    public function getUserConsent(?int $id = null): JsonResponse|array|Collection;
 
     /**
      * @param int|null $id
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function getUserGroups(?int $id = null): Collection;
+    public function getUserGroups(?int $id = null): JsonResponse|array|Collection;
 
     /**
      * @param int|null $id
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function getUserNotes(?int $id = null): Collection;
+    public function getUserNotes(?int $id = null): JsonResponse|array|Collection;
 }

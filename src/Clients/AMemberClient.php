@@ -2,9 +2,11 @@
 
 namespace Plutuss\AMember\Clients;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 use Plutuss\AMember\Contracts\AMemberParametersApiInterface;
+use Plutuss\AMember\Response\AdapterResponse;
 use Plutuss\AMember\Traits\AMemberParametersApi;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
@@ -17,6 +19,11 @@ class AMemberClient implements AMemberClientInterface, AMemberParametersApiInter
     private string $url;
     private static $instance = null;
 
+    public function __construct()
+    {
+        $this->url = config('amember.amember_url');
+        $this->amember_api_key = config('amember.amember_api_key');
+    }
 
     public static function getInstance(): static
     {
@@ -34,18 +41,17 @@ class AMemberClient implements AMemberClientInterface, AMemberParametersApiInter
      */
     public function setOption(string $url, array $params = []): static
     {
-        $this->url = config('amember.amember_url') . $url;
+        $this->url .= $url;
         $this->params = $params;
-        $this->amember_api_key = config('amember.amember_api_key');
         $this->initParams();
 
         return $this;
     }
 
     /**
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function sendGet(): Collection
+    public function sendGet(): JsonResponse|array|Collection
     {
         try {
             $response = Http::withHeaders([
@@ -59,9 +65,9 @@ class AMemberClient implements AMemberClientInterface, AMemberParametersApiInter
     }
 
     /**
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function sendPost(): Collection
+    public function sendPost(): JsonResponse|array|Collection
     {
         try {
             $response = Http::withHeaders([
@@ -75,9 +81,9 @@ class AMemberClient implements AMemberClientInterface, AMemberParametersApiInter
     }
 
     /**
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function sendPut(): Collection
+    public function sendPut(): JsonResponse|array|Collection
     {
         try {
             $response = Http::withHeaders([
@@ -91,9 +97,9 @@ class AMemberClient implements AMemberClientInterface, AMemberParametersApiInter
     }
 
     /**
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function sendDelete(): Collection
+    public function sendDelete(): JsonResponse|array|Collection
     {
         try {
             $response = Http::withHeaders([
@@ -106,16 +112,9 @@ class AMemberClient implements AMemberClientInterface, AMemberParametersApiInter
         return $this->getResponse($response->status(), $response->json());
     }
 
-    /**
-     * @param int $status
-     * @param mixed $data
-     * @return Collection
-     */
-    private function getResponse(int $status, mixed $data): Collection
+
+    private function getResponse(int $status, mixed $data): JsonResponse|array|Collection
     {
-        return collect([
-            'status' => $status,
-            'data' => $data,
-        ]);
+        return (new AdapterResponse)->getResponse($status, $data);
     }
 }

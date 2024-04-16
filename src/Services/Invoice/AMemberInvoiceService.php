@@ -2,6 +2,8 @@
 
 namespace Plutuss\AMember\Services\Invoice;
 
+
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 use Plutuss\AMember\Clients\AMemberClient;
 use Plutuss\AMember\Contracts\AMemberParametersApiInterface;
@@ -11,9 +13,9 @@ class AMemberInvoiceService extends AMemberClient implements AMemberParametersAp
 
     /**
      * @param int|null $id
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function getInvoiceItems(?int $id = null): Collection
+    public function getInvoiceItems(?int $id = null): JsonResponse|array|Collection
     {
         return $this->setOption(
             url_join('/invoice-items', $id)
@@ -22,9 +24,9 @@ class AMemberInvoiceService extends AMemberClient implements AMemberParametersAp
 
     /**
      * @param int|null $id
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function getInvoice(?int $id = null): Collection
+    public function getInvoice(?int $id = null): JsonResponse|array|Collection
     {
         return $this->setOption(
             url_join('/invoices', $id)
@@ -33,9 +35,9 @@ class AMemberInvoiceService extends AMemberClient implements AMemberParametersAp
 
     /**
      * @param int|null $id
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function getInvoicePayments(?int $id = null): Collection
+    public function getInvoicePayments(?int $id = null): JsonResponse|array|Collection
     {
         return $this->setOption(
             url_join('/invoice-payments', $id)
@@ -46,9 +48,9 @@ class AMemberInvoiceService extends AMemberClient implements AMemberParametersAp
 
     /**
      * @param int|null $id
-     * @return Collection
+     * @return JsonResponse|array|Collection
      */
-    public function getAccess(?int $id = null): Collection
+    public function getAccess(?int $id = null): JsonResponse|array|Collection
     {
         return $this->setOption(
             url_join('/access', $id)
