@@ -1,6 +1,6 @@
 ## Installed packages
 
-Laravel:
+## Laravel:
 
 - [GitHub](https://github.com/plutuss/amember-api-laravel).
 - [AMember Pro Web API](https://docs.amember.com/REST/).
@@ -13,16 +13,14 @@ Laravel:
 php artisan vendor:publish --provider="Plutuss\AMember\Providers\AMemberServiceProvider"
 ```
 
-.env
-
+## .env
+- [How to get aMember API Key](https://help.birdsend.co/article/show/104240-how-to-get-amember-api-key)
 ```dotenv
 AMEMBER_URL=http://g00dsdw5vib.amdemo.com/api
 AMEMBER_API_KEY=F1dbbZd3453sdfneqdsfhw
 ```
 
-## Use
-
-Use Facades:
+## Use Facade AMember
 
 - auth()
 - invoice()
@@ -100,4 +98,35 @@ You can pass additional parameters to control output: [Docs](https://docs.amembe
 |           | If multiple filters are provided, it will be concatenated into an SQL AND expression.                          |
 | nested()  |Requests to include nested records into dataset.  nested[]=invoices&nested[]=access
 | | It will add user's invoices and access records into output. List of available nested tables is unique to each record type.| 
- 
+
+
+```php
+<?php
+
+    public function index()
+    {
+      \Plutuss\AMember\Facades\AMember::users()->count(12)->page(2)->getUsers();
+    }
+```
+## It is also possible to make a custom query
+
+```php
+<?php
+
+    public function index()
+    {
+     (new AMemberClient())->setOption('/users')
+        ->format('json')
+        ->count(12)
+        ->sendGet();
+    }
+
+    public function auth() 
+    {
+     (new AMemberClient())->setOption('/check-access/by-login-pass', [
+            'login' => 'admin',
+            'pass' => '12341234',
+        ])->sendPost();
+    
+    }
+```
