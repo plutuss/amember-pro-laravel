@@ -21,6 +21,12 @@ interface AMemberInvoiceInterface
     public function getInvoice(?int $id = null): JsonResponse|array|Collection;
 
     /**
+     * @param array $data
+     * @return JsonResponse|array|Collection
+     */
+    public function setInvoice(array $data): JsonResponse|array|Collection;
+
+    /**
      * @param int|null $id
      * @return JsonResponse|array|Collection
      */
