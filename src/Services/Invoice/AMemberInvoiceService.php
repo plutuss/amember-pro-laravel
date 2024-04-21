@@ -43,9 +43,7 @@ class AMemberInvoiceService extends AMemberClient implements AMemberParametersAp
             url_join('/invoice-payments', $id)
         )->sendGet();
     }
-
-
-
+    
     /**
      * @param int|null $id
      * @return JsonResponse|array|Collection
@@ -57,4 +55,14 @@ class AMemberInvoiceService extends AMemberClient implements AMemberParametersAp
         )->sendGet();
     }
 
+    /**
+     * @param array $data
+     * @return JsonResponse|array|Collection
+     */
+    public function setInvoice(array $data): JsonResponse|array|Collection
+    {
+        return $this->setOption(
+            url_join('/invoices'), $data
+        )->sendPost();
+    }
 }
