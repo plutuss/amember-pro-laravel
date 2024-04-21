@@ -2,6 +2,7 @@
 
 namespace Plutuss\AMember\Clients;
 
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
@@ -25,6 +26,9 @@ class AMemberClient implements AMemberClientInterface, AMemberParametersApiInter
         $this->amember_api_key = config('amember.amember_api_key');
     }
 
+    /**
+     * @return static
+     */
     public static function getInstance(): static
     {
         if (!(static::$instance instanceof static)) {
@@ -50,6 +54,7 @@ class AMemberClient implements AMemberClientInterface, AMemberParametersApiInter
 
     /**
      * @return JsonResponse|array|Collection
+     * @throws ConnectionException
      */
     public function sendGet(): JsonResponse|array|Collection
     {
@@ -66,6 +71,7 @@ class AMemberClient implements AMemberClientInterface, AMemberParametersApiInter
 
     /**
      * @return JsonResponse|array|Collection
+     * @throws ConnectionException
      */
     public function sendPost(): JsonResponse|array|Collection
     {
@@ -80,8 +86,10 @@ class AMemberClient implements AMemberClientInterface, AMemberParametersApiInter
         return $this->getResponse($response->status(), $response->json());
     }
 
+
     /**
      * @return JsonResponse|array|Collection
+     * @throws ConnectionException
      */
     public function sendPut(): JsonResponse|array|Collection
     {
@@ -96,8 +104,10 @@ class AMemberClient implements AMemberClientInterface, AMemberParametersApiInter
         return $this->getResponse($response->status(), $response->json());
     }
 
+
     /**
      * @return JsonResponse|array|Collection
+     * @throws ConnectionException
      */
     public function sendDelete(): JsonResponse|array|Collection
     {
@@ -113,6 +123,11 @@ class AMemberClient implements AMemberClientInterface, AMemberParametersApiInter
     }
 
 
+    /**
+     * @param int $status
+     * @param mixed $data
+     * @return JsonResponse|array|Collection
+     */
     private function getResponse(int $status, mixed $data): JsonResponse|array|Collection
     {
         return (new AdapterResponse)->getResponse($status, $data);

@@ -2,6 +2,7 @@
 
 namespace Plutuss\AMember\Services\Form;
 
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 use Plutuss\AMember\Clients\AMemberClient;
@@ -12,6 +13,7 @@ class AMemberFormService extends AMemberClient implements AMemberFormInterface, 
 
     /**
      * @return JsonResponse|array|Collection
+     * @throws ConnectionException
      */
     public function savedForms(): JsonResponse|array|Collection
     {

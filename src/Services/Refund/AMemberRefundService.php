@@ -2,6 +2,7 @@
 
 namespace Plutuss\AMember\Services\Refund;
 
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 use Plutuss\AMember\Clients\AMemberClient;
@@ -13,6 +14,7 @@ class AMemberRefundService extends AMemberClient implements AMemberRefundInterfa
     /**
      * @param int|null $id
      * @return JsonResponse|array|Collection
+     * @throws ConnectionException
      */
     public function invoiceRefunds(?int $id = null): JsonResponse|array|Collection
     {
