@@ -51,7 +51,7 @@ trait AMemberParametersApi
         );
 
         $this->params = collect($params)->map(function (null|string|array $item) {
-            if (isset($item) && !empty ($item)) {
+            if (!empty ($item)) {
                 return $item;
             }
         })

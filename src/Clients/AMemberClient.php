@@ -62,7 +62,6 @@ class AMemberClient implements AMemberClientInterface, AMemberParametersApiInter
     {
         $this->url .= $url;
         $this->params = $params;
-        $this->initParams();
 
         return $this;
     }
@@ -74,6 +73,8 @@ class AMemberClient implements AMemberClientInterface, AMemberParametersApiInter
     public function sendGet(): JsonResponse|array|Collection
     {
         try {
+            $this->initParams();
+
             $response = Http::withHeaders([
                 'X-API-Key' => $this->amember_api_key,
             ])->get($this->url, $this->params);
@@ -91,6 +92,8 @@ class AMemberClient implements AMemberClientInterface, AMemberParametersApiInter
     public function sendPost(): JsonResponse|array|Collection
     {
         try {
+            $this->initParams();
+
             $response = Http::withHeaders([
                 'X-API-Key' => $this->amember_api_key,
             ])
@@ -111,6 +114,8 @@ class AMemberClient implements AMemberClientInterface, AMemberParametersApiInter
     public function sendPut(): JsonResponse|array|Collection
     {
         try {
+            $this->initParams();
+
             $response = Http::withHeaders([
                 'X-API-Key' => $this->amember_api_key,
             ])
@@ -131,6 +136,8 @@ class AMemberClient implements AMemberClientInterface, AMemberParametersApiInter
     public function sendDelete(): JsonResponse|array|Collection
     {
         try {
+            $this->initParams();
+
             $response = Http::withHeaders([
                 'X-API-Key' => $this->amember_api_key,
             ])->delete($this->url, $this->params);
