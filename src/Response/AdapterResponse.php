@@ -10,10 +10,28 @@ class AdapterResponse
     private string $type_response;
     private array $response_class;
 
+    /**
+     * @var null|static
+     */
+    private static $instance = null;
+
     public function __construct()
     {
         $this->type_response = config('amember.type_response.default');
         $this->response_class = config('amember.type_response.response_class');
+    }
+
+
+    /**
+     * @return static
+     */
+    public static function getInstance(): static
+    {
+        if (!(static::$instance instanceof static)) {
+            static::$instance = new static();
+        }
+
+        return static::$instance;
     }
 
     public function getResponse(int $status, mixed $data): array|JsonResponse|Collection
