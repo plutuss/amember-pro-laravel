@@ -1,4 +1,5 @@
 <?php
+
 namespace Plutuss\AMember\Contracts;
 interface AMemberParametersApiInterface
 {
@@ -34,15 +35,18 @@ interface AMemberParametersApiInterface
     public function order(string $order): static;
 
     /**
-     * @param string $fieldName
-     * @param string $filter
+     * @example filter(['user_id' => 1])
+     *
+     * @param array $filter
      * @return $this
      */
-    public function filter(string $fieldName, string $filter): static;
+    public function filter(array $filter): static;
 
     /**
-     * @param string $nested
+     * @example nested(['invoices','access'])
+     *
+     * @param array $nested
      * @return $this
      */
-    public function nested(string $nested): static;
+    public function nested(array $nested): static;
 }

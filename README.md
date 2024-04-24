@@ -132,17 +132,33 @@ You can pass additional parameters to control output: [Docs](https://docs.amembe
 
     public function index()
     {
-     (new AMemberClient())->setOption('/users')
-        ->format('json')
-        ->count(12)
-        ->sendGet();
+      (new AMemberClient())->setOption('/users')
+          ->format('json')
+          ->filter(['user_id' => 1])
+          ->count(12)
+          ->sendGet();
+
+        // Or you can
+        AMemberClient::getInstance()
+          ->setOption('/users')
+          ->format('json')
+          ->filter(['user_id' => 1])
+          ->count(12)
+          ->sendGet();
     }
 
     public function auth()
     {
-     (new AMemberClient())->setOption('/check-access/by-login-pass', [
-            'login' => 'admin',
-            'pass' => '12341234',
+      (new AMemberClient())->setOption('/check-access/by-login-pass', [
+              'login' => 'admin',
+              'pass' => '12341234',
+          ])->sendPost();
+
+      // Or you can
+      AMemberClient::getInstance()
+        ->setOption('/check-access/by-login-pass', [
+              'login' => 'admin',
+              'pass' => '12341234',
         ])->sendPost();
 
     }

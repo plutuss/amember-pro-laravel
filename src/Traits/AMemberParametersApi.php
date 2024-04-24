@@ -4,14 +4,34 @@ namespace Plutuss\AMember\Traits;
 
 trait AMemberParametersApi
 {
+    /**
+     * @var string
+     */
     private string $format = 'json';
+    /**
+     * @var int
+     */
     private int $count = 20;
+    /**
+     * @var int
+     */
     private int $page = 0;
+    /**
+     * @var string
+     */
     private string $sort;
+    /**
+     * @var string
+     */
     private string $order = 'asc';
-    private string $filter;
-    private string $field_name = '';
-    private string $nested;
+    /**
+     * @var array|null
+     */
+    private ?array $filter = null;
+    /**
+     * @var array|null
+     */
+    private ?array $nested = null;
 
 
     private function initParams(): void
@@ -25,13 +45,13 @@ trait AMemberParametersApi
                 '_page' => $this->page ?? null,
                 '_sort' => $this->sort ?? null,
                 '_order' => $this->order ?? null,
-                '_filter[' . $this->field_name . ']' => $this->filter ?? null,
-                '_nested[]' => $this->nested ?? null,
+                '_filter' => $this->filter ?? null,
+                '_nested' => $this->nested ?? null,
             ]
         );
 
         $this->params = collect($params)->map(function (null|string|array $item) {
-            if (isset($item) && !empty($item)) {
+            if (!empty ($item)) {
                 return $item;
             }
         })
@@ -91,23 +111,35 @@ trait AMemberParametersApi
     }
 
     /**
-     * @param string $fieldName
-     * @param string $filter
+     * @param array $filter
      * @return $this
+     * @example filter(['user_id' => 1])
+     *
      */
-    public function filter(string $fieldName, string $filter): static
+    public function filter(array $filter): static
     {
-        $this->field_name = $fieldName;
+        if (is_array($this->filter)) {
+            $this->filter = array_merge($filter, $this->filter);
+            return $this;
+        }
+
         $this->filter = $filter;
         return $this;
     }
 
     /**
-     * @param string $nested
+     * @param array $nested
      * @return $this
+     * @example nested(['invoices','access'])
+     *
      */
-    public function nested(string $nested): static
+    public function nested(array $nested): static
     {
+        if (is_array($this->nested)) {
+            $this->nested = array_merge($nested, $this->nested);
+            return $this;
+        }
+
         $this->nested = $nested;
         return $this;
     }

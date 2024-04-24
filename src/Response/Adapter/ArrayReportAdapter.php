@@ -7,9 +7,9 @@ class ArrayReportAdapter implements ReportAdapterInterface
 
     public function getData(int $status, mixed $data): array
     {
-        return collect([
+        return [
             'status' => $status,
             'data' => $data,
-        ])->toArray();
+        ];
     }
 }
