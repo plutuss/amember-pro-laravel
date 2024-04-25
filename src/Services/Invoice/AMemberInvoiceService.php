@@ -3,6 +3,7 @@
 namespace Plutuss\AMember\Services\Invoice;
 
 
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 use Plutuss\AMember\Clients\AMemberClient;
@@ -14,6 +15,7 @@ class AMemberInvoiceService extends AMemberClient implements AMemberParametersAp
     /**
      * @param int|null $id
      * @return JsonResponse|array|Collection
+     * @throws ConnectionException
      */
     public function getInvoiceItems(?int $id = null): JsonResponse|array|Collection
     {
@@ -25,6 +27,7 @@ class AMemberInvoiceService extends AMemberClient implements AMemberParametersAp
     /**
      * @param int|null $id
      * @return JsonResponse|array|Collection
+     * @throws ConnectionException
      */
     public function getInvoice(?int $id = null): JsonResponse|array|Collection
     {
@@ -36,6 +39,7 @@ class AMemberInvoiceService extends AMemberClient implements AMemberParametersAp
     /**
      * @param int|null $id
      * @return JsonResponse|array|Collection
+     * @throws ConnectionException
      */
     public function getInvoicePayments(?int $id = null): JsonResponse|array|Collection
     {
@@ -47,6 +51,7 @@ class AMemberInvoiceService extends AMemberClient implements AMemberParametersAp
     /**
      * @param int|null $id
      * @return JsonResponse|array|Collection
+     * @throws ConnectionException
      */
     public function getAccess(?int $id = null): JsonResponse|array|Collection
     {
@@ -58,6 +63,7 @@ class AMemberInvoiceService extends AMemberClient implements AMemberParametersAp
     /**
      * @param array $data
      * @return JsonResponse|array|Collection
+     * @throws ConnectionException
      */
     public function setInvoice(array $data): JsonResponse|array|Collection
     {
@@ -70,6 +76,7 @@ class AMemberInvoiceService extends AMemberClient implements AMemberParametersAp
      * @param int $id
      * @param array $data
      * @return JsonResponse|array|Collection
+     * @throws ConnectionException
      */
     public function updateInvoice(int $id, array $data): JsonResponse|array|Collection
     {

@@ -18,4 +18,19 @@ interface AMemberAccessInterface
      * @return JsonResponse|array|Collection
      */
     public function getAccessLog(?int $id = null): JsonResponse|array|Collection;
+
+
+    /**
+     * @param array $data
+     * @return JsonResponse|array|Collection
+     */
+    public function setAccess(array $data): JsonResponse|array|Collection;
+
+
+    /**
+     * @param int $id
+     * @param array $data
+     * @return JsonResponse|array|Collection
+     */
+    public function updateAccess(int $id, array $data): JsonResponse|array|Collection;
 }

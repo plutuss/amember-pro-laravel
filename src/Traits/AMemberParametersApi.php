@@ -110,11 +110,11 @@ trait AMemberParametersApi
         return $this;
     }
 
-    /**
-     * @param array $filter
-     * @return $this
+   /**
      * @example filter(['user_id' => 1])
      *
+     * @param array $filter
+     * @return $this
      */
     public function filter(array $filter): static
     {
@@ -127,11 +127,11 @@ trait AMemberParametersApi
         return $this;
     }
 
-    /**
-     * @param array $nested
-     * @return $this
+      /**
      * @example nested(['invoices','access'])
      *
+     * @param array $nested
+     * @return $this
      */
     public function nested(array $nested): static
     {
