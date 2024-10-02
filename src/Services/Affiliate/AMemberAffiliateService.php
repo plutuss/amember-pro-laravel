@@ -2,6 +2,7 @@
 
 namespace Plutuss\AMember\Services\Affiliate;
 
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 use Plutuss\AMember\Clients\AMemberClient;
@@ -11,9 +12,11 @@ use Plutuss\AMember\Services\Affiliate\AMemberAffiliateInterface;
 class AMemberAffiliateService extends AMemberClient implements AMemberAffiliateInterface, AMemberParametersApiInterface
 {
 
+
     /**
      * @param int|null $id
      * @return JsonResponse|array|Collection
+     * @throws ConnectionException
      */
     public function affPayouts(?int $id = null): JsonResponse|array|Collection
     {
@@ -22,9 +25,11 @@ class AMemberAffiliateService extends AMemberClient implements AMemberAffiliateI
         )->sendGet();
     }
 
+
     /**
      * @param int|null $id
      * @return JsonResponse|array|Collection
+     * @throws ConnectionException
      */
     public function affPayoutDetails(?int $id = null): JsonResponse|array|Collection
     {

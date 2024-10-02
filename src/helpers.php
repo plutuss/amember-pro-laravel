@@ -10,7 +10,7 @@ if (!function_exists('url_join')) {
     function url_join(string $url, string|int $params = null): string
     {
         if ($params) {
-            return $url . '/' . $params;
+            return rtrim($url, '/') . '/' . $params;
         }
         return $url;
     }
