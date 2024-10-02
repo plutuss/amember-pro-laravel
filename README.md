@@ -22,6 +22,13 @@ AMEMBER_URL=http://g00dsdw5vib.amdemo.com/api
 AMEMBER_API_KEY=F1dbbZd3453sdfneqdsfhw
 ```
 
+
+```dotenv
+#default collection
+#collection|array|json
+AMEMBER_TYPE_RESPONSE=collection
+```
+
 ## Use Facade AMember
 
 - auth()
