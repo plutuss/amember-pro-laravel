@@ -79,7 +79,7 @@ class AMemberClient implements AMemberClientInterface, AMemberParametersApiInter
                 'X-API-Key' => $this->amember_api_key,
             ])->get($this->url, $this->params);
         } catch (HttpException $exception) {
-            throw new HttpException(500, $exception->getMessage());
+            $this->httpException($exception);
         }
 
         return $this->getResponse($response->status(), $response->json());
@@ -100,7 +100,7 @@ class AMemberClient implements AMemberClientInterface, AMemberParametersApiInter
                 ->asForm()
                 ->post($this->url, $this->params);
         } catch (HttpException $exception) {
-            throw new HttpException(500, $exception->getMessage());
+            $this->httpException($exception);
         }
 
         return $this->getResponse($response->status(), $response->json());
@@ -122,7 +122,7 @@ class AMemberClient implements AMemberClientInterface, AMemberParametersApiInter
                 ->asForm()
                 ->put($this->url, $this->params);
         } catch (HttpException $exception) {
-            throw new HttpException(500, $exception->getMessage());
+            $this->httpException($exception);
         }
 
         return $this->getResponse($response->status(), $response->json());
@@ -142,7 +142,7 @@ class AMemberClient implements AMemberClientInterface, AMemberParametersApiInter
                 'X-API-Key' => $this->amember_api_key,
             ])->delete($this->url, $this->params);
         } catch (HttpException $exception) {
-            throw new HttpException(500, $exception->getMessage());
+            $this->httpException($exception);
         }
 
         return $this->getResponse($response->status(), $response->json());
@@ -157,6 +157,11 @@ class AMemberClient implements AMemberClientInterface, AMemberParametersApiInter
     private function getResponse(int $status, mixed $data): JsonResponse|array|Collection
     {
         return AdapterResponse::getInstance()->getResponse($status, $data);
+    }
+
+    private function httpException(HttpException $exception)
+    {
+        throw new HttpException($exception->getStatusCode(), $exception->getMessage());
     }
 
 }
