@@ -57,7 +57,7 @@ Connection failures throw `Illuminate\Http\Client\ConnectionException`. HTTP 4xx
 
 ## Tests cannot start
 
-Install PHP and Composer. In a source checkout, run `composer update` to resolve the newly introduced development dependencies and refresh the old lock file, then `composer test` and `composer test:unit`. Integration tests need Laravel dependencies; `php tests/run.php` is the standalone suite. Tests use fake transport and do not require live API credentials.
+Install PHP and Composer. In a source checkout, run `composer install` to resolve development dependencies and create a local lock file, then `composer test` and `composer test:unit`. The library does not commit its development lock file. Integration tests need Laravel dependencies; `php tests/run.php` is the standalone suite. Tests use fake transport and do not require live API credentials.
 
 ## What is not included
 

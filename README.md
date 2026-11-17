@@ -19,6 +19,7 @@ Integrate **aMember Pro** with **Laravel** using a PHP REST API client with a La
 - [Recipes and Laravel testing](docs/examples.md)
 - [Response formats](#response-formats)
 - [Troubleshooting and limitations](docs/troubleshooting.md)
+- [Release notes and migration](CHANGELOG.md)
 - [Contributing](CONTRIBUTING.md)
 - [Repository topics and package discovery](docs/discoverability.md)
 
@@ -166,12 +167,12 @@ Check Access always decodes JSON and omits general query parameters, regardless 
 From a source checkout, resolve the development dependencies and run both suites:
 
 ```shell
-composer update
+composer install
 composer test
 composer test:unit
 ```
 
-The existing lock file predates the Testbench dependencies; `composer update` must refresh it before a reproducible `composer install` can be used. PHP and Composer are required locally. The integration suite boots Laravel with Testbench and uses `Http::fake()`; neither suite needs a live aMember server.
+This library does not commit a development lock file. The first `composer install` resolves dependencies and creates a local lock file; subsequent installs reuse it. PHP and Composer are required locally. The integration suite boots Laravel with Testbench and uses `Http::fake()`; neither suite needs a live aMember server.
 
 ## Support and upstream documentation
 

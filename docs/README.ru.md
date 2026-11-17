@@ -65,11 +65,11 @@ $categories = AMember::productCategories()->get();
 В исходном репозитории:
 
 ```shell
-composer update
+composer install
 composer test
 composer test:unit
 ```
 
-`composer update` обновит старый lock-файл новыми зависимостями разработки. Тесты используют подмену HTTP и не требуют работающего aMember. Матрица CI настроена для Laravel 10, 11 и 12; фактический результат смотрите в GitHub Actions.
+Первый `composer install` разрешает зависимости и создаёт локальный lock-файл; библиотека не хранит его в Git. Тесты используют подмену HTTP и не требуют работающего aMember. Матрица CI настроена для Laravel 10, 11 и 12; фактический результат смотрите в GitHub Actions.
 
 Ошибки и предложения: [GitHub Issues](https://github.com/plutuss/amember-pro-laravel/issues). Лицензия: [MIT](../LICENSE.md).

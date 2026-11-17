@@ -10,3 +10,6 @@
 /.idea
 /.vscode
 
+
+# Library development lock; applications manage their own dependency locks.
+/composer.lock
