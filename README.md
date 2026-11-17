@@ -1,181 +1,169 @@
-## Installed packages
+# aMember Pro REST API client for Laravel
 
-## Laravel:
+[![Packagist version](https://img.shields.io/packagist/v/plutuss/amember-pro-laravel.svg)](https://packagist.org/packages/plutuss/amember-pro-laravel)
+[![Packagist downloads](https://img.shields.io/packagist/dt/plutuss/amember-pro-laravel.svg)](https://packagist.org/packages/plutuss/amember-pro-laravel)
+[![Tests](https://github.com/plutuss/amember-pro-laravel/actions/workflows/tests.yml/badge.svg)](https://github.com/plutuss/amember-pro-laravel/actions/workflows/tests.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md)
 
-- [GitHub](https://github.com/plutuss/amember-api-laravel).
-- [AMember Pro Web API](https://docs.amember.com/REST/).
+Integrate **aMember Pro** with **Laravel** using a PHP REST API client with a Laravel facade, configuration auto-discovery, fluent filters, pagination, and response adapters. Manage members, products, invoices, subscription access, payment records, and affiliate payouts from your Laravel application.
+
+**Package:** `plutuss/amember-pro-laravel` · **Namespace:** `Plutuss\AMember` · [Русское руководство](docs/README.ru.md)
+
+## Documentation
+
+- [Requirements](#requirements)
+- [Installation and configuration](#installation-and-configuration)
+- [Quick start](#quick-start)
+- [API methods and endpoints](docs/api.md)
+- [Filters, pagination, and parameters](docs/parameters.md)
+- [Recipes and Laravel testing](docs/examples.md)
+- [Response formats](#response-formats)
+- [Troubleshooting and limitations](docs/troubleshooting.md)
+- [Contributing](CONTRIBUTING.md)
+- [Repository topics and package discovery](docs/discoverability.md)
+
+## Features
+
+- Laravel service provider and `AMember` facade.
+- User creation, updates, deletion, groups, notes, and consent records.
+- Products, billing plans, product categories, and category relations.
+- Invoices, invoice items, payment records, and refunds.
+- Subscription access creation, updates, deletion, and access logs.
+- Check Access by login, email, password, and IP; password recovery requests.
+- Saved forms and affiliate payout records.
+- Fluent query parameters and custom REST requests.
+- Array, Laravel Collection, and JsonResponse wrappers; JSON, XML, and serialized wire formats.
+- PHPUnit / Orchestra Testbench integration tests and a standalone regression suite.
+
+Reading a payment or refund record does not initiate a payment or refund. Operations depend on the aMember API module and the permissions granted to your API key.
+
+## Requirements
+
+The Composer constraints target Laravel 10, 11, and 12. The CI matrix is configured as follows; consult the workflow results for execution status.
+
+| Laravel | PHP in CI | Orchestra Testbench |
+| --- | --- | --- |
+| 10 | 8.1 | 8 |
+| 11 | 8.2 | 9 |
+| 12 | 8.3 | 10 |
+
+Use a PHP version supported by your Laravel version. An aMember Pro installation with the API module enabled and a permitted API key is required for real requests. See the [official API setup instructions](https://docs.amember.com/REST/#enabling-of-rest-api).
+
+## Installation and configuration
 
 ```shell
- composer require plutuss/amember-pro-laravel
+composer require plutuss/amember-pro-laravel
 ```
+
+Laravel discovers the service provider automatically. Configuration defaults are loaded without publishing. To customize the configuration file:
 
 ```shell
 php artisan vendor:publish --provider="Plutuss\AMember\Providers\AMemberServiceProvider"
 ```
 
-## .env
-
-- [How to get aMember API Key](https://help.birdsend.co/article/show/104240-how-to-get-amember-api-key)
+Set these values in your Laravel application's `.env`:
 
 ```dotenv
-AMEMBER_URL=http://g00dsdw5vib.amdemo.com/api
-AMEMBER_API_KEY=F1dbbZd3453sdfneqdsfhw
-```
-
-
-```dotenv
-#default collection
-#collection|array|json
+AMEMBER_URL=https://members.example.com/amember/api
+AMEMBER_API_KEY=replace-with-your-api-key
 AMEMBER_TYPE_RESPONSE=collection
 ```
 
-## Use Facade AMember
+`AMEMBER_URL` must include the installation path and `/api`. The key is sent in the `X-API-Key` header. Choose `collection`, `array`, or `json` for the response wrapper.
 
-- auth()
-- invoice()
-- payment()
-- users()
-- products()
-- refunds()
-- forms()
-- access()
-- affiliate()
+After changing environment settings in an application that caches configuration:
 
-```php
-<?php
-
-class AMemberController extends Controller
-{
-    public function index()
-    {
-      \Plutuss\AMember\Facades\AMember::users()->getUsers();
-    }
-
-    public function invoice_all()
-    {
-      \Plutuss\AMember\Facades\AMember::invoice()->getInvoice();
-    }
-
-    public function invoice_by_id()
-    {
-      \Plutuss\AMember\Facades\AMember::invoice()->getInvoice(8);
-    }
-
-    public function auth()
-    {
-          \Plutuss\AMember\Facades\AMember::auth()->byLoginPass(
-            login: 'admin',
-            pass: '12341234'
-        );
-    }
-
-    public function store()
-    {
-
-          \Plutuss\AMember\Facades\AMember::users()->addUsers(
-            login: 'admin',
-            pass: '12341234',
-            email: 'admin@admin.com',
-            params: [
-                'name_f' => 'John',
-                'name_l' => 'Smith',
-                ...
-              ]
-          );
-
-    }
-
-    public function update()
-    {
-
-          \Plutuss\AMember\Facades\AMember::users()
-            ->updateUser(
-              id: 8,
-              fieldsAndValue: [
-                'email' => 'max@admin.com',
-                'name_f' => 'Max',
-                'name_l' => 'Smith',
-              ]
-          );
-
-    }
-
-
-
-}
-
+```shell
+php artisan config:clear
 ```
 
-### Parameters
-
-You can pass additional parameters to control output: [Docs](https://docs.amember.com/REST/#fetching-list-of-users-via-web-api)
-
-| Method   | Description                                                                                                                |
-| -------- | -------------------------------------------------------------------------------------------------------------------------- |
-| format() | Either: json (default), xml or serialize                                                                                   |
-| count()  | Number of records per page (default: 20, max: 1000)                                                                        |
-| page()   | Page of output (default: 0 - the first page)                                                                               |
-| sort()   | Sort records based on a specified field                                                                                    |
-| order()  | Sort direction. Either asc (default) or desc                                                                               |
-| filter() | Adds a WHERE condition for FIELDNAME.                                                                                      |
-|          | If search value contains % - it is considered as pattern for SQL LIKE expression, else SQL scondition is used.             |
-|          | If multiple filters are provided, it will be concatenated into an SQL AND expression.                                      |
-| nested() | Requests to include nested records into dataset. nested[]=invoices&nested[]=access                                         |
-|          | It will add user's invoices and access records into output. List of available nested tables is unique to each record type. |
+## Quick start
 
 ```php
-<?php
+use Plutuss\AMember\Facades\AMember;
 
-    public function index()
-    {
-      \Plutuss\AMember\Facades\AMember::users()->count(12)->page(2)->getUsers();
-    }
+// Default wrapper: Illuminate\Support\Collection.
+$result = AMember::users()->getUsers();
+$httpStatus = $result->get('status');
+$apiData = $result->get('data');
+
+// Fetch one user.
+$user = AMember::users()->getUsers(42);
+
+// Filter and paginate: page numbers start at zero.
+$users = AMember::users()
+    ->where('email', '%@example.com')
+    ->paginate(50, 0)
+    ->sort('user_id')
+    ->order('desc')
+    ->getUsers();
+
+// Read related billing plans.
+$products = AMember::products()->nested(['billing-plans'])->products();
 ```
 
-## It is also possible to make a custom query
+Create and update a member:
 
 ```php
-<?php
+use Plutuss\AMember\Facades\AMember;
 
-    public function index()
-    {
-      (new AMemberClient())->setOption('/users')
-          ->format('json')
-          ->filter(['user_id' => 1])
-          ->count(12)
-          ->sendGet();
+$created = AMember::users()->addUsers(
+    login: 'jane',
+    pass: 'replace-with-a-unique-password',
+    email: 'jane@example.com',
+    params: ['name_f' => 'Jane', 'name_l' => 'Doe'],
+);
 
-        // Or you can
-        AMemberClient::getInstance()
-          ->setOption('/users')
-          ->format('json')
-          ->filter(['user_id' => 1])
-          ->count(12)
-          ->sendGet();
-    }
-
-    public function auth()
-    {
-      (new AMemberClient())->setOption('/check-access/by-login-pass', [
-              'login' => 'admin',
-              'pass' => '12341234',
-          ])->sendPost();
-
-      // Or you can
-      AMemberClient::getInstance()
-        ->setOption('/check-access/by-login-pass', [
-              'login' => 'admin',
-              'pass' => '12341234',
-        ])->sendPost();
-
-    }
+$updated = AMember::users()->updateUser(42, [
+    'name_f' => 'Jane',
+    'name_l' => 'Smith',
+]);
 ```
 
-## Tests
+Dedicated resource builders make common lookups shorter:
 
-The Laravel integration suite uses [Orchestra Testbench](https://packages.tools/testbench) and PHPUnit. It boots a Laravel application with the package provider and uses `Http::fake()` to prevent real API requests.
+```php
+use Plutuss\AMember\Facades\AMember;
 
-Install development dependencies and run the suites (PHP 8.1 or newer):
+$notes = AMember::userNotes()->where('user_id', 42)->get();
+$groups = AMember::userGroups()->get();
+$plan = AMember::billingPlans()->get(7);
+$categories = AMember::productCategories()->get();
+```
+
+See the [complete endpoint reference](docs/api.md) and [copyable recipes](docs/examples.md).
+
+## Response formats
+
+Every configured adapter wraps the result as `status` (the upstream HTTP status) and `data` (the API body):
+
+```php
+// With AMEMBER_TYPE_RESPONSE=array:
+[
+    'status' => 200,
+    'data' => [/* decoded aMember JSON payload */],
+]
+```
+
+| Configuration | Returned PHP type | Access |
+| --- | --- | --- |
+| `collection` (default) | `Illuminate\Support\Collection` | `$result->get('data')` |
+| `array` | `array` | `$result['data']` |
+| `json` | `Illuminate\Http\JsonResponse` | `$result->getData(true)['data']` |
+
+The JSON adapter includes the upstream status inside the body; the outer JsonResponse currently uses HTTP 200. Set the outer status yourself when forwarding it from a controller. HTTP error responses are returned through the same adapters; connection failures throw `Illuminate\Http\Client\ConnectionException`.
+
+`format()` selects the upstream wire format independently of the adapter:
+
+- `json`: decoded JSON in `data` (default).
+- `xml`: original XML string in `data`.
+- `serialize`: original PHP serialized string in `data`; the client does not unserialize it.
+
+Check Access always decodes JSON and omits general query parameters, regardless of `format()`.
+
+## Development and tests
+
+From a source checkout, resolve the development dependencies and run both suites:
 
 ```shell
 composer update
@@ -183,78 +171,14 @@ composer test
 composer test:unit
 ```
 
-`composer update` refreshes the existing lock file with the new development dependencies. After that, use `composer install` for reproducible installs.
+The existing lock file predates the Testbench dependencies; `composer update` must refresh it before a reproducible `composer install` can be used. PHP and Composer are required locally. The integration suite boots Laravel with Testbench and uses `Http::fake()`; neither suite needs a live aMember server.
 
-- `composer test`: provider bindings, facade requests, configuration, HTTP methods, fluent parameters, response adapters, and connection failures using Laravel.
-- `composer test:unit`: the standalone regression suite without Laravel dependencies.
+## Support and upstream documentation
 
-GitHub Actions runs both suites against Laravel 10 / Testbench 8 / PHP 8.1, Laravel 11 / Testbench 9 / PHP 8.2, and Laravel 12 / Testbench 10 / PHP 8.3.
+- [Report a reproducible bug](https://github.com/plutuss/amember-pro-laravel/issues/new?template=bug_report.yml)
+- [Request a feature](https://github.com/plutuss/amember-pro-laravel/issues/new?template=feature_request.yml)
+- [aMember Pro REST API](https://docs.amember.com/REST/)
+- [Official API examples](https://docs.amember.com/REST_API_examples/)
+- [Packagist package](https://packagist.org/packages/plutuss/amember-pro-laravel)
 
-## REST API compatibility
-
-`format('json'|'xml'|'serialize')` selects the aMember wire format. JSON is decoded; XML and PHP serialized responses are returned as raw strings in `data` inside the configured array, collection, or JSON response wrapper. Serialized responses are never passed to `unserialize()`.
-
-Query options are validated before sending: `count` accepts 1–1000, `page` accepts zero or greater, and `order` accepts `asc` or `desc`. Invalid values throw `InvalidArgumentException`.
-
-Check Access methods use GET, always decode JSON, and omit general query options because this controller ignores them. This includes `restorePassword`, which sends the password recovery email.
-
-```php
-use Plutuss\AMember\Facades\AMember;
-
-AMember::users()->getUserGroups();
-AMember::users()->getUserGroups(7);
-AMember::access()->deleteAccess(51);
-
-// Include related records when reading: sends _nested[].
-AMember::products()->nested(['billing-plans'])->products();
-
-// Create related records: pass nested (without the underscore) in the payload.
-AMember::products()->setProducts([
-    'title' => 'Example',
-    'nested' => [
-        'billing-plans' => [[
-            'first_price' => '10.00',
-            'first_period' => '1m',
-            'currency' => 'USD',
-            'qty' => 1,
-        ]],
-        'product-product-category' => [['product_category_id' => 2]],
-    ],
-]);
-```
-
-Invoice creation supports the same `nested` payload with `invoice-items`, `invoice-payments`, and `access`. See the [REST documentation](https://docs.amember.com/REST/) and [official examples](https://docs.amember.com/REST_API_examples/).
-
-## Resource accessors and additional parameters
-
-These accessors return a fresh builder with `get(?int $id = null, array $params = [])`:
-
-| Accessor | REST path |
-| --- | --- |
-| `AMember::userGroups()` | `/user-groups` |
-| `AMember::userNotes()` | `/user-notes` |
-| `AMember::userConsent()` | `/user-consent` |
-| `AMember::billingPlans()` | `/billing-plans` |
-| `AMember::productCategories()` | `/product-category` |
-| `AMember::productCategoryRelations()` | `/product-product-category` |
-| `AMember::invoiceItems()` | `/invoice-items` |
-
-```php
-AMember::userNotes()->where('user_id', 12)->paginate(50, 0)->get();
-AMember::billingPlans()->get(7);
-AMember::productCategories()->sort('title')->order('asc')->get();
-AMember::invoice()->getInvoiceRefunds(5);
-AMember::forms()->savedForms(9);
-```
-
-`where($field, $value)` sets or replaces one `_filter` condition, including zero and false values. Multiple fields are combined with AND by aMember; `%` in a value enables LIKE matching. `paginate($count, $page)` sets the page size and zero-based page number.
-
-`parameters(array $params)` merges additional fields for your aMember installation or custom API controller. Fields passed directly to an endpoint take precedence; the fluent query options take precedence over reserved `_format`, `_count`, `_page`, `_sort`, `_order`, `_filter`, and `_nested` keys. It does not expand server permissions or enable unsupported operations. Check Access continues to send only its own documented arguments.
-
-```php
-AMember::products()->parameters(['custom_field' => 'value'])->setProducts([
-    'title' => 'Example',
-]);
-```
-
-The existing service methods remain available. Resource paths and query conventions follow the [aMember REST documentation](https://docs.amember.com/REST/).
+Independent integration package; aMember Pro and Laravel are their respective projects. Licensed under the [MIT license](LICENSE.md).

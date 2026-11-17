@@ -1,0 +1,43 @@
+name: Bug report
+description: Report a reproducible issue with the aMember Pro Laravel client.
+title: "[Bug]: "
+body:
+  - type: input
+    id: package-version
+    attributes:
+      label: Package version or commit
+      placeholder: Output of composer show plutuss/amember-pro-laravel
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: PHP, Laravel, and aMember versions
+      placeholder: PHP version, Laravel version, aMember version
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Minimal reproduction
+      description: Include the method chain, relevant configuration, and steps. Remove keys, passwords, and customer data.
+      render: php
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior and sanitized response
+      description: Include the upstream HTTP status and error body, or exception message.
+    validations:
+      required: true
+  - type: textarea
+    id: documentation
+    attributes:
+      label: Relevant API documentation or additional context

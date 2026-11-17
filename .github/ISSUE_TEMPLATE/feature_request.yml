@@ -1,0 +1,23 @@
+name: Feature request
+description: Suggest an endpoint, parameter, or Laravel integration improvement.
+title: "[Feature]: "
+body:
+  - type: textarea
+    id: use-case
+    attributes:
+      label: Use case
+      description: What should the package help you accomplish?
+    validations:
+      required: true
+  - type: textarea
+    id: proposed-api
+    attributes:
+      label: Proposed API or example
+      description: Include an example method chain or payload using placeholder data.
+    validations:
+      required: true
+  - type: textarea
+    id: upstream
+    attributes:
+      label: Upstream documentation and version
+      description: For API changes, link to the aMember endpoint documentation and specify the relevant version.
