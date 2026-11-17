@@ -50,13 +50,10 @@ trait AMemberParametersApi
             ]
         );
 
-        $this->params = collect($params)->map(function (null|string|array $item) {
-            if (!empty ($item)) {
-                return $item;
-            }
-        })
-            ->filter()
-            ->toArray();
+        $this->params = array_filter(
+            $params,
+            static fn (mixed $value): bool => $value !== null
+        );
 
     }
 

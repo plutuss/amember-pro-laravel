@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Http;
 use Plutuss\AMember\Contracts\AMemberParametersApiInterface;
 use Plutuss\AMember\Response\AdapterResponse;
 use Plutuss\AMember\Traits\AMemberParametersApi;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class AMemberClient implements AMemberClientInterface, AMemberParametersApiInterface
 {
@@ -23,12 +22,14 @@ class AMemberClient implements AMemberClientInterface, AMemberParametersApiInter
     /**
      * @var array
      */
-    protected array $params;
+    protected array $params = [];
 
     /**
      * @var string
      */
     private string $url;
+
+    private string $baseUrl;
 
     /**
      * @var null|static
@@ -37,7 +38,8 @@ class AMemberClient implements AMemberClientInterface, AMemberParametersApiInter
 
     public function __construct()
     {
-        $this->url = config('amember.amember_url');
+        $this->baseUrl = rtrim(config('amember.amember_url'), '/');
+        $this->url = $this->baseUrl;
         $this->amember_api_key = config('amember.amember_api_key');
     }
 
@@ -60,7 +62,7 @@ class AMemberClient implements AMemberClientInterface, AMemberParametersApiInter
      */
     public function setOption(string $url, array $params = []): static
     {
-        $this->url .= $url;
+        $this->url = $this->baseUrl . '/' . ltrim($url, '/');
         $this->params = $params;
 
         return $this;
@@ -72,82 +74,49 @@ class AMemberClient implements AMemberClientInterface, AMemberParametersApiInter
      */
     public function sendGet(): JsonResponse|array|Collection
     {
-        try {
-            $this->initParams();
-
-            $response = Http::withHeaders([
-                'X-API-Key' => $this->amember_api_key,
-            ])->get($this->url, $this->params);
-        } catch (HttpException $exception) {
-            $this->httpException($exception);
-        }
-
-        return $this->getResponse($response->status(), $response->json());
+        return $this->sendRequest('get');
     }
 
     /**
-     * @return JsonResponse|array|Collection
      * @throws ConnectionException
      */
     public function sendPost(): JsonResponse|array|Collection
     {
-        try {
-            $this->initParams();
-
-            $response = Http::withHeaders([
-                'X-API-Key' => $this->amember_api_key,
-            ])
-                ->asForm()
-                ->post($this->url, $this->params);
-        } catch (HttpException $exception) {
-            $this->httpException($exception);
-        }
-
-        return $this->getResponse($response->status(), $response->json());
+        return $this->sendRequest('post');
     }
 
-
     /**
-     * @return JsonResponse|array|Collection
      * @throws ConnectionException
      */
     public function sendPut(): JsonResponse|array|Collection
     {
-        try {
-            $this->initParams();
-
-            $response = Http::withHeaders([
-                'X-API-Key' => $this->amember_api_key,
-            ])
-                ->asForm()
-                ->put($this->url, $this->params);
-        } catch (HttpException $exception) {
-            $this->httpException($exception);
-        }
-
-        return $this->getResponse($response->status(), $response->json());
+        return $this->sendRequest('put');
     }
 
-
     /**
-     * @return JsonResponse|array|Collection
      * @throws ConnectionException
      */
     public function sendDelete(): JsonResponse|array|Collection
     {
-        try {
-            $this->initParams();
+        return $this->sendRequest('delete');
+    }
 
-            $response = Http::withHeaders([
-                'X-API-Key' => $this->amember_api_key,
-            ])->delete($this->url, $this->params);
-        } catch (HttpException $exception) {
-            $this->httpException($exception);
+    private function sendRequest(string $method): JsonResponse|array|Collection
+    {
+        $this->initParams();
+
+        $request = Http::withHeaders([
+            'X-API-Key' => $this->amember_api_key,
+        ]);
+
+        if (in_array($method, ['post', 'put'], true)) {
+            $request = $request->asForm();
         }
+
+        $response = $request->{$method}($this->url, $this->params);
 
         return $this->getResponse($response->status(), $response->json());
     }
-
 
     /**
      * @param int $status
@@ -157,11 +126,6 @@ class AMemberClient implements AMemberClientInterface, AMemberParametersApiInter
     private function getResponse(int $status, mixed $data): JsonResponse|array|Collection
     {
         return AdapterResponse::getInstance()->getResponse($status, $data);
-    }
-
-    private function httpException(HttpException $exception)
-    {
-        throw new HttpException($exception->getStatusCode(), $exception->getMessage());
     }
 
 }
