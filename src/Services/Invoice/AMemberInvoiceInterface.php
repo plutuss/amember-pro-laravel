@@ -44,4 +44,5 @@ interface AMemberInvoiceInterface
      * @return JsonResponse|array|Collection
      */
     public function getAccess(?int $id = null): JsonResponse|array|Collection;
+    public function getInvoiceRefunds(?int $id = null): JsonResponse|array|Collection;
 }

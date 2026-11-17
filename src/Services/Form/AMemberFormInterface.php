@@ -11,5 +11,5 @@ interface AMemberFormInterface
     /**
      * @return JsonResponse|array|Collection
      */
-    public function savedForms(): JsonResponse|array|Collection;
+    public function savedForms(?int $id = null): JsonResponse|array|Collection;
 }

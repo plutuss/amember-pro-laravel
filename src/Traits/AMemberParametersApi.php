@@ -163,4 +163,21 @@ trait AMemberParametersApi
     }
 
     /** Additional payload fields; endpoint arguments and fluent options take precedence. */
+    public function parameters(array $params): static
+    {
+        $this->additionalParams = array_replace($this->additionalParams, $params);
+        return $this;
+    }
+
+    public function where(string $field, string|int|float|bool|null $value): static
+    {
+        $this->filter[$field] = $value;
+        return $this;
+    }
+
+    public function paginate(int $count = 20, int $page = 0): static
+    {
+        return $this->count($count)->page($page);
+    }
+
 }

@@ -2,6 +2,8 @@
 
 namespace Plutuss\AMember\Services;
 
+use Plutuss\AMember\Services\Resource\AMemberResourceService;
+
 use Plutuss\AMember\Contracts\AMemberParametersApiInterface;
 use Plutuss\AMember\Services\Access\AMemberAccessInterface;
 use Plutuss\AMember\Services\Access\AMemberAccessService;
@@ -94,6 +96,41 @@ class AMemberService implements AMemberInterface
     public function affiliate(): AMemberAffiliateInterface|AMemberParametersApiInterface
     {
         return AMemberAffiliateService::getInstance();
+    }
+
+    public function userGroups(): AMemberResourceService
+    {
+        return new AMemberResourceService('/user-groups');
+    }
+
+    public function userNotes(): AMemberResourceService
+    {
+        return new AMemberResourceService('/user-notes');
+    }
+
+    public function userConsent(): AMemberResourceService
+    {
+        return new AMemberResourceService('/user-consent');
+    }
+
+    public function billingPlans(): AMemberResourceService
+    {
+        return new AMemberResourceService('/billing-plans');
+    }
+
+    public function productCategories(): AMemberResourceService
+    {
+        return new AMemberResourceService('/product-category');
+    }
+
+    public function productCategoryRelations(): AMemberResourceService
+    {
+        return new AMemberResourceService('/product-product-category');
+    }
+
+    public function invoiceItems(): AMemberResourceService
+    {
+        return new AMemberResourceService('/invoice-items');
     }
 
 }

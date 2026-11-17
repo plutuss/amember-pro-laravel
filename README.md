@@ -224,3 +224,37 @@ AMember::products()->setProducts([
 ```
 
 Invoice creation supports the same `nested` payload with `invoice-items`, `invoice-payments`, and `access`. See the [REST documentation](https://docs.amember.com/REST/) and [official examples](https://docs.amember.com/REST_API_examples/).
+
+## Resource accessors and additional parameters
+
+These accessors return a fresh builder with `get(?int $id = null, array $params = [])`:
+
+| Accessor | REST path |
+| --- | --- |
+| `AMember::userGroups()` | `/user-groups` |
+| `AMember::userNotes()` | `/user-notes` |
+| `AMember::userConsent()` | `/user-consent` |
+| `AMember::billingPlans()` | `/billing-plans` |
+| `AMember::productCategories()` | `/product-category` |
+| `AMember::productCategoryRelations()` | `/product-product-category` |
+| `AMember::invoiceItems()` | `/invoice-items` |
+
+```php
+AMember::userNotes()->where('user_id', 12)->paginate(50, 0)->get();
+AMember::billingPlans()->get(7);
+AMember::productCategories()->sort('title')->order('asc')->get();
+AMember::invoice()->getInvoiceRefunds(5);
+AMember::forms()->savedForms(9);
+```
+
+`where($field, $value)` sets or replaces one `_filter` condition, including zero and false values. Multiple fields are combined with AND by aMember; `%` in a value enables LIKE matching. `paginate($count, $page)` sets the page size and zero-based page number.
+
+`parameters(array $params)` merges additional fields for your aMember installation or custom API controller. Fields passed directly to an endpoint take precedence; the fluent query options take precedence over reserved `_format`, `_count`, `_page`, `_sort`, `_order`, `_filter`, and `_nested` keys. It does not expand server permissions or enable unsupported operations. Check Access continues to send only its own documented arguments.
+
+```php
+AMember::products()->parameters(['custom_field' => 'value'])->setProducts([
+    'title' => 'Example',
+]);
+```
+
+The existing service methods remain available. Resource paths and query conventions follow the [aMember REST documentation](https://docs.amember.com/REST/).

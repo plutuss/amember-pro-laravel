@@ -2,6 +2,8 @@
 
 namespace Plutuss\AMember\Facades;
 
+use Plutuss\AMember\Services\Resource\AMemberResourceService;
+
 use Illuminate\Support\Facades\Facade;
 use Plutuss\AMember\Contracts\AMemberParametersApiInterface;
 use Plutuss\AMember\Services\Access\AMemberAccessInterface;
@@ -16,6 +18,13 @@ use Plutuss\AMember\Services\Users\AMemberUserInterface;
 
 
 /**
+ * @method static AMemberResourceService userGroups()
+ * @method static AMemberResourceService userNotes()
+ * @method static AMemberResourceService userConsent()
+ * @method static AMemberResourceService billingPlans()
+ * @method static AMemberResourceService productCategories()
+ * @method static AMemberResourceService productCategoryRelations()
+ * @method static AMemberResourceService invoiceItems()
  * @method static AMemberCheckAccessInterface|AMemberParametersApiInterface auth()
  * @method static AMemberParametersApiInterface|AMemberInvoiceInterface invoice()
  * @method static AMemberPaymentInterface|AMemberParametersApiInterface payment()

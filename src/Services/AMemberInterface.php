@@ -2,6 +2,8 @@
 
 namespace Plutuss\AMember\Services;
 
+use Plutuss\AMember\Services\Resource\AMemberResourceService;
+
 use Plutuss\AMember\Contracts\AMemberParametersApiInterface;
 use Plutuss\AMember\Services\Access\AMemberAccessInterface;
 use Plutuss\AMember\Services\Affiliate\AMemberAffiliateInterface;
@@ -59,4 +61,18 @@ interface AMemberInterface
      * @return AMemberAffiliateInterface|AMemberParametersApiInterface
      */
     public function affiliate(): AMemberAffiliateInterface|AMemberParametersApiInterface;
+    public function userGroups(): AMemberResourceService;
+
+    public function userNotes(): AMemberResourceService;
+
+    public function userConsent(): AMemberResourceService;
+
+    public function billingPlans(): AMemberResourceService;
+
+    public function productCategories(): AMemberResourceService;
+
+    public function productCategoryRelations(): AMemberResourceService;
+
+    public function invoiceItems(): AMemberResourceService;
+
 }

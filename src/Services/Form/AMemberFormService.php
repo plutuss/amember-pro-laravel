@@ -15,10 +15,10 @@ class AMemberFormService extends AMemberClient implements AMemberFormInterface, 
      * @return JsonResponse|array|Collection
      * @throws ConnectionException
      */
-    public function savedForms(): JsonResponse|array|Collection
+    public function savedForms(?int $id = null): JsonResponse|array|Collection
     {
         return $this->setOption(
-            url_join('/saved-forms')
+            url_join('/saved-forms', $id)
         )->sendGet();
     }
 }

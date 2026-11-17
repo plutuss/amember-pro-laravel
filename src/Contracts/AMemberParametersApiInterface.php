@@ -49,4 +49,9 @@ interface AMemberParametersApiInterface
      * @return $this
      */
     public function nested(array $nested): static;
+    public function parameters(array $params): static;
+
+    public function where(string $field, string|int|float|bool|null $value): static;
+
+    public function paginate(int $count = 20, int $page = 0): static;
 }

@@ -84,4 +84,8 @@ class AMemberInvoiceService extends AMemberClient implements AMemberParametersAp
             url_join('/invoices', $id), $data
         )->sendPut();
     }
+    public function getInvoiceRefunds(?int $id = null): JsonResponse|array|Collection
+    {
+        return $this->setOption(url_join('/invoice-refunds', $id))->sendGet();
+    }
 }
