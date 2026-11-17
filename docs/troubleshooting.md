@@ -4,7 +4,7 @@
 
 ## Installation or dependency resolution fails
 
-Use a PHP version supported by your Laravel version. The current package constraints allow Laravel 10, 11, and 12. Run `composer show plutuss/amember-pro-laravel` to inspect your installed version and `composer why-not plutuss/amember-pro-laravel VERSION` with the actual desired release version to identify conflicts. Source checkout changes may be newer than the latest published tag.
+Use a PHP version supported by your Laravel version. The current package constraints allow Laravel 10, 11, 12, and 13. Run `composer show plutuss/amember-pro-laravel` to inspect your installed version and `composer why-not plutuss/amember-pro-laravel VERSION` with the actual desired release version to identify conflicts. Source checkout changes may be newer than the latest published tag.
 
 ## API endpoint returns 404
 

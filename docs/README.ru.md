@@ -10,7 +10,7 @@
 composer require plutuss/amember-pro-laravel
 ```
 
-Ограничения зависимостей рассчитаны на Laravel 10–12. Выберите PHP, совместимый с вашей версией Laravel. В aMember включите модуль API и создайте ключ с нужными разрешениями в Remote Api Permissions.
+Ограничения зависимостей рассчитаны на Laravel 10–13. Выберите PHP, совместимый с вашей версией Laravel. В aMember включите модуль API и создайте ключ с нужными разрешениями в Remote Api Permissions.
 
 В `.env` Laravel-приложения:
 
@@ -70,6 +70,6 @@ composer test
 composer test:unit
 ```
 
-Первый `composer install` разрешает зависимости и создаёт локальный lock-файл; библиотека не хранит его в Git. Тесты используют подмену HTTP и не требуют работающего aMember. Матрица CI настроена для Laravel 10, 11 и 12; фактический результат смотрите в GitHub Actions.
+Первый `composer install` разрешает зависимости и создаёт локальный lock-файл; библиотека не хранит его в Git. Тесты используют подмену HTTP и не требуют работающего aMember. Матрица CI настроена для Laravel 10, 11, 12 и 13; фактический результат смотрите в GitHub Actions.
 
 Ошибки и предложения: [GitHub Issues](https://github.com/plutuss/amember-pro-laravel/issues). Лицензия: [MIT](../LICENSE.md).

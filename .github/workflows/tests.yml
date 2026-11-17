@@ -25,6 +25,9 @@ jobs:
           - php: '8.3'
             testbench: '^10.0'
             advisory-block: '1'
+          - php: '8.3'
+            testbench: '^11.0'
+            advisory-block: '1'
     steps:
       - uses: actions/checkout@v4
       - uses: shivammathur/setup-php@v2
@@ -35,7 +38,7 @@ jobs:
       - name: Select Testbench version
         run: composer require --dev "orchestra/testbench:${{ matrix.testbench }}" --no-update
       # Legacy Laravel versions are tested only for compatibility in an isolated runner.
-      # Keep advisory blocking enabled for the current Laravel 12 dependency set.
+      # Keep advisory blocking enabled for the Laravel 12 and 13 dependency sets.
       - name: Install dependencies
         env:
           COMPOSER_POLICY_ADVISORIES_BLOCK: ${{ matrix.advisory-block }}

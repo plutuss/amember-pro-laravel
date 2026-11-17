@@ -13,8 +13,12 @@ class RestCompatibilityTest extends TestCase
 {
     public function test_xml_and_serialized_responses_preserve_the_wire_body(): void
     {
-        foreach (['xml' => '<response><_total>0</_total></response>', 'serialize' => 'a:1:{s:6:"_total";i:0;}'] as $format => $body) {
-            Http::fake(['*' => Http::response($body, 200)]);
+        $bodies = ['xml' => '<response><_total>0</_total></response>', 'serialize' => 'a:1:{s:6:"_total";i:0;}'];
+        $sequence = Http::fakeSequence();
+        foreach ($bodies as $body) {
+            $sequence->push($body, 200);
+        }
+        foreach ($bodies as $format => $body) {
             $result = (new AMemberClient())->setOption('/users')->format($format)->sendGet();
             $this->assertSame(['status' => 200, 'data' => $body], $result);
             Http::assertSent(fn (Request $request) => $request['_format'] === $format);

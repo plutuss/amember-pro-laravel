@@ -14,7 +14,7 @@ composer test:unit
 
 This library ignores its local development lock file. The first `composer install` resolves dependencies; subsequent installs reuse the local lock. Use `composer update` to refresh the development environment. Consuming Laravel applications manage their own lock files.
 
-Integration tests extend `Plutuss\AMember\Tests\TestCase`, boot Laravel through Orchestra Testbench, and use `Http::fake()`. Never point automated tests at a production aMember installation. CI selects Testbench 8, 9, and 10 for the configured Laravel 10, 11, and 12 matrix.
+Integration tests extend `Plutuss\AMember\Tests\TestCase`, boot Laravel through Orchestra Testbench, and use `Http::fake()`. Never point automated tests at a production aMember installation. CI selects Testbench 8, 9, 10, and 11 for the configured Laravel 10, 11, 12, and 13 matrix.
 
 ## Adding or fixing API support
 
@@ -31,4 +31,4 @@ Explain the concrete problem, resulting behavior, and how you verified it. State
 
 Do not include real API keys, passwords, or customer data in examples, logs, test fixtures, or issue attachments. Contributions are provided under the repository's [MIT license](LICENSE.md).
 
-Laravel 10 and 11 CI jobs permit advisory-affected test dependencies only to verify legacy compatibility in isolated runners. Laravel 12 keeps advisory blocking enabled; this exception does not change consuming applications or package Composer policy.
+Laravel 10 and 11 CI jobs permit advisory-affected test dependencies only to verify legacy compatibility in isolated runners. Laravel 12 and 13 keep advisory blocking enabled; this exception does not change consuming applications or package Composer policy.

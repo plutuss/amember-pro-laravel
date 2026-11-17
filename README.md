@@ -40,15 +40,16 @@ Reading a payment or refund record does not initiate a payment or refund. Operat
 
 ## Requirements
 
-The Composer constraints target Laravel 10, 11, and 12. The CI matrix is configured as follows; consult the workflow results for execution status.
+The Composer constraints target Laravel 10, 11, 12, and 13. The CI matrix is configured as follows; consult the workflow results for execution status.
 
 | Laravel | PHP in CI | Orchestra Testbench |
 | --- | --- | --- |
 | 10 | 8.1 | 8 |
 | 11 | 8.2 | 9 |
 | 12 | 8.3 | 10 |
+| 13 | 8.3 | 11 |
 
-Use a PHP version supported by your Laravel version. An aMember Pro installation with the API module enabled and a permitted API key is required for real requests. See the [official API setup instructions](https://docs.amember.com/REST/#enabling-of-rest-api).
+Use a PHP version supported by your Laravel version. Laravel 13 requires PHP 8.3 or newer and uses Testbench 11 in this package's test suite. An aMember Pro installation with the API module enabled and a permitted API key is required for real requests. See the [official API setup instructions](https://docs.amember.com/REST/#enabling-of-rest-api).
 
 ## Installation and configuration
 

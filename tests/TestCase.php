@@ -3,6 +3,7 @@
 namespace Plutuss\AMember\Tests;
 
 use Illuminate\Support\Facades\Http;
+use Illuminate\Http\Client\Request;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Plutuss\AMember\Clients\AMemberClient;
 use Plutuss\AMember\Providers\AMemberServiceProvider;
@@ -34,6 +35,12 @@ abstract class TestCase extends OrchestraTestCase
     {
         $this->resetPackageInstances();
         parent::tearDown();
+    }
+
+    protected function queryParameters(Request $request): array
+    {
+        parse_str(parse_url($request->url(), PHP_URL_QUERY) ?? '', $parameters);
+        return $parameters;
     }
 
     private function resetPackageInstances(): void

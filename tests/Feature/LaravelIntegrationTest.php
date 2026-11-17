@@ -74,12 +74,15 @@ class LaravelIntegrationTest extends TestCase
         (new AMemberClient())->setOption('/users')->count(12)->page(2)->sort('user_id')->order('desc')
             ->filter(['active' => 0])->nested(['invoices'])->sendGet();
 
-        Http::assertSent(fn (Request $request) => (int) $request['_count'] === 12
-            && (int) $request['_page'] === 2
-            && $request['_sort'] === 'user_id'
-            && $request['_order'] === 'desc'
-            && $request['_filter'] === ['active' => '0']
-            && $request['_nested'] === ['invoices']);
+        Http::assertSent(function (Request $request): bool {
+            $query = $this->queryParameters($request);
+            return $query['_count'] === '12'
+                && $query['_page'] === '2'
+                && $query['_sort'] === 'user_id'
+                && $query['_order'] === 'desc'
+                && $query['_filter'] === ['active' => '0']
+                && $query['_nested'] === ['invoices'];
+        });
     }
 
     public function test_collection_response_uses_laravel_collection(): void

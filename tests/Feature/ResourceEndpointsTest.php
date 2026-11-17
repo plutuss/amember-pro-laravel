@@ -51,10 +51,13 @@ class ResourceEndpointsTest extends TestCase
             ->parameters(['custom' => 'second'])->where('user_id', 12)->where('user_id', 15)
             ->paginate(50, 2)->get(null, ['custom' => 'endpoint']);
 
-        Http::assertSent(fn (Request $request) => $request['custom'] === 'endpoint'
-            && $request['zero'] === '0' && $request['empty'] === ''
-            && $request['_count'] === '50' && $request['_page'] === '2'
-            && $request['_filter'] === ['user_id' => '15']);
+        Http::assertSent(function (Request $request): bool {
+            $query = $this->queryParameters($request);
+            return $query['custom'] === 'endpoint'
+                && $query['zero'] === '0' && $query['empty'] === ''
+                && $query['_count'] === '50' && $query['_page'] === '2'
+                && $query['_filter'] === ['user_id' => '15'];
+        });
     }
 
     public function test_invoice_refunds_and_saved_forms_support_ids(): void
