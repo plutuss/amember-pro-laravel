@@ -21,7 +21,9 @@
         }
     ],
     "require": {
-        "php": "^8.1|^8.2|^8.3"
+        "php": "^8.1|^8.2|^8.3",
+        "illuminate/http": "^10.0|^11.0|^12.0",
+        "illuminate/support": "^10.0|^11.0|^12.0"
     },
     "autoload": {
         "psr-4": {
@@ -37,5 +39,18 @@
                 "Plutuss\\AMember\\Providers\\AMemberServiceProvider"
             ]
         }
+    },
+    "require-dev": {
+        "orchestra/testbench": "^8.0|^9.0|^10.0",
+        "phpunit/phpunit": "^10.5|^11.0"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Plutuss\\AMember\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "@php vendor/bin/phpunit",
+        "test:unit": "@php tests/run.php"
     }
 }

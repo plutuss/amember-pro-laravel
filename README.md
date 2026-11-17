@@ -170,3 +170,22 @@ You can pass additional parameters to control output: [Docs](https://docs.amembe
 
     }
 ```
+
+## Tests
+
+The Laravel integration suite uses [Orchestra Testbench](https://packages.tools/testbench) and PHPUnit. It boots a Laravel application with the package provider and uses `Http::fake()` to prevent real API requests.
+
+Install development dependencies and run the suites (PHP 8.1 or newer):
+
+```shell
+composer update
+composer test
+composer test:unit
+```
+
+`composer update` refreshes the existing lock file with the new development dependencies. After that, use `composer install` for reproducible installs.
+
+- `composer test`: provider bindings, facade requests, configuration, HTTP methods, fluent parameters, response adapters, and connection failures using Laravel.
+- `composer test:unit`: the standalone regression suite without Laravel dependencies.
+
+GitHub Actions runs both suites against Laravel 10 / Testbench 8 / PHP 8.1, Laravel 11 / Testbench 9 / PHP 8.2, and Laravel 12 / Testbench 10 / PHP 8.3.

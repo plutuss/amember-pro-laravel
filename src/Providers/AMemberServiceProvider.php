@@ -11,11 +11,10 @@ class AMemberServiceProvider extends ServiceProvider
 
     public function register(): void
     {
-        $this->app->singleton('amember.app', AMemberInterface::class);
+        $this->mergeConfigFrom(__DIR__ . '/../config/amember.php', 'amember');
 
-        $this->app->singleton(AMemberInterface::class, function ($app)  {
-            return new AMemberService();
-        });
+        $this->app->singleton(AMemberInterface::class, AMemberService::class);
+        $this->app->alias(AMemberInterface::class, 'amember.app');
     }
 
     /**
