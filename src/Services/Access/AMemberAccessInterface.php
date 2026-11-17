@@ -33,4 +33,5 @@ interface AMemberAccessInterface
      * @return JsonResponse|array|Collection
      */
     public function updateAccess(int $id, array $data): JsonResponse|array|Collection;
+    public function deleteAccess(int $id): JsonResponse|array|Collection;
 }

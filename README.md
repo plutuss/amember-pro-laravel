@@ -189,3 +189,38 @@ composer test:unit
 - `composer test:unit`: the standalone regression suite without Laravel dependencies.
 
 GitHub Actions runs both suites against Laravel 10 / Testbench 8 / PHP 8.1, Laravel 11 / Testbench 9 / PHP 8.2, and Laravel 12 / Testbench 10 / PHP 8.3.
+
+## REST API compatibility
+
+`format('json'|'xml'|'serialize')` selects the aMember wire format. JSON is decoded; XML and PHP serialized responses are returned as raw strings in `data` inside the configured array, collection, or JSON response wrapper. Serialized responses are never passed to `unserialize()`.
+
+Query options are validated before sending: `count` accepts 1–1000, `page` accepts zero or greater, and `order` accepts `asc` or `desc`. Invalid values throw `InvalidArgumentException`.
+
+Check Access methods use GET, always decode JSON, and omit general query options because this controller ignores them. This includes `restorePassword`, which sends the password recovery email.
+
+```php
+use Plutuss\AMember\Facades\AMember;
+
+AMember::users()->getUserGroups();
+AMember::users()->getUserGroups(7);
+AMember::access()->deleteAccess(51);
+
+// Include related records when reading: sends _nested[].
+AMember::products()->nested(['billing-plans'])->products();
+
+// Create related records: pass nested (without the underscore) in the payload.
+AMember::products()->setProducts([
+    'title' => 'Example',
+    'nested' => [
+        'billing-plans' => [[
+            'first_price' => '10.00',
+            'first_period' => '1m',
+            'currency' => 'USD',
+            'qty' => 1,
+        ]],
+        'product-product-category' => [['product_category_id' => 2]],
+    ],
+]);
+```
+
+Invoice creation supports the same `nested` payload with `invoice-items`, `invoice-payments`, and `access`. See the [REST documentation](https://docs.amember.com/REST/) and [official examples](https://docs.amember.com/REST_API_examples/).

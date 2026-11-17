@@ -103,7 +103,13 @@ class AMemberClient implements AMemberClientInterface, AMemberParametersApiInter
 
     private function sendRequest(string $method): JsonResponse|array|Collection
     {
-        $this->initParams();
+        $checkAccess = str_starts_with(substr($this->url, strlen($this->baseUrl)), '/check-access/');
+
+        if ($checkAccess) {
+            $this->params = array_intersect_key($this->params, array_flip(['login', 'pass', 'ip', 'email']));
+        } else {
+            $this->initParams();
+        }
 
         $request = Http::withHeaders([
             'X-API-Key' => $this->amember_api_key,
@@ -115,7 +121,10 @@ class AMemberClient implements AMemberClientInterface, AMemberParametersApiInter
 
         $response = $request->{$method}($this->url, $this->params);
 
-        return $this->getResponse($response->status(), $response->json());
+        // Keep non-JSON wire formats intact; never unserialize remote data.
+        $data = $checkAccess || $this->format === 'json' ? $response->json() : $response->body();
+
+        return $this->getResponse($response->status(), $data);
     }
 
     /**

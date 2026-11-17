@@ -22,7 +22,7 @@ class AMemberCheckAccessService extends AMemberClient implements AMemberCheckAcc
             'login' => $login,
             'pass' => $pass,
             'ip' => $ip,
-        ])->sendPost();
+        ])->sendGet();
 
     }
 
@@ -36,7 +36,7 @@ class AMemberCheckAccessService extends AMemberClient implements AMemberCheckAcc
         return $this->setOption('/check-access/by-login-pass', [
             'login' => $login,
             'pass' => $pass,
-        ])->sendPost();
+        ])->sendGet();
     }
 
     /**
@@ -47,7 +47,7 @@ class AMemberCheckAccessService extends AMemberClient implements AMemberCheckAcc
     {
         return $this->setOption('/check-access/by-login', [
             'login' => $login,
-        ])->sendPost();
+        ])->sendGet();
     }
 
     /**
@@ -58,7 +58,7 @@ class AMemberCheckAccessService extends AMemberClient implements AMemberCheckAcc
     {
         return $this->setOption('/check-access/by-email', [
             'email' => $email,
-        ])->sendPost();
+        ])->sendGet();
     }
 
     /**
@@ -69,7 +69,7 @@ class AMemberCheckAccessService extends AMemberClient implements AMemberCheckAcc
     {
         return $this->setOption('/check-access/send-pass', [
             'login' => $login,
-        ])->sendPost();
+        ])->sendGet();
     }
 
 }

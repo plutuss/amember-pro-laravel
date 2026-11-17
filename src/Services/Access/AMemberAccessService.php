@@ -60,4 +60,8 @@ class AMemberAccessService extends AMemberClient implements AMemberAccessInterfa
             url_join('/access', $id), $data
         )->sendPut();
     }
+    public function deleteAccess(int $id): JsonResponse|array|Collection
+    {
+        return $this->setOption(url_join('/access', $id))->sendDelete();
+    }
 }

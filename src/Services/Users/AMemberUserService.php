@@ -106,4 +106,8 @@ class AMemberUserService extends AMemberClient implements AMemberUserInterface, 
         )->sendGet();
     }
 
+    public function getUserGroups(?int $id = null): JsonResponse|array|Collection
+    {
+        return $this->setOption(url_join('/user-groups', $id))->sendGet();
+    }
 }

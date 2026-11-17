@@ -2,12 +2,16 @@
 
 namespace Plutuss\AMember\Traits;
 
+use InvalidArgumentException;
+
 trait AMemberParametersApi
 {
     /**
      * @var string
      */
     private string $format = 'json';
+
+    private array $additionalParams = [];
     /**
      * @var int
      */
@@ -38,6 +42,7 @@ trait AMemberParametersApi
     {
 
         $params = array_merge(
+            $this->additionalParams,
             $this->params,
             [
                 '_format' => $this->format ?? null,
@@ -63,6 +68,10 @@ trait AMemberParametersApi
      */
     public function format(string $format): static
     {
+        if (!in_array($format, ['json', 'xml', 'serialize'], true)) {
+            throw new InvalidArgumentException('Format must be json, xml or serialize.');
+        }
+
         $this->format = $format;
         return $this;
     }
@@ -73,6 +82,10 @@ trait AMemberParametersApi
      */
     public function count(int $count): static
     {
+        if ($count < 1 || $count > 1000) {
+            throw new InvalidArgumentException('Count must be between 1 and 1000.');
+        }
+
         $this->count = $count;
         return $this;
     }
@@ -83,6 +96,10 @@ trait AMemberParametersApi
      */
     public function page(int $page): static
     {
+        if ($page < 0) {
+            throw new InvalidArgumentException('Page must be zero or greater.');
+        }
+
         $this->page = $page;
         return $this;
     }
@@ -103,6 +120,10 @@ trait AMemberParametersApi
      */
     public function order(string $order): static
     {
+        if (!in_array($order, ['asc', 'desc'], true)) {
+            throw new InvalidArgumentException('Order must be asc or desc.');
+        }
+
         $this->order = $order;
         return $this;
     }
@@ -141,4 +162,5 @@ trait AMemberParametersApi
         return $this;
     }
 
+    /** Additional payload fields; endpoint arguments and fluent options take precedence. */
 }
